@@ -1,5 +1,5 @@
 <template>
-	<view >
+	<view>
 		<view class="bg-light" :class="fixed ? 'fixed-top' : ''">
 			<!-- 状态栏 -->
 			<view :style="'height: ' + statusBarHeight + 'px;'"></view>
@@ -8,12 +8,12 @@
 				<!-- 左边 -->
 				<view class="flex align-center font-md">
 					<!-- 标题 -->
-					<text class="font-md ml-3"><slot name="title"></slot></text>
+					<text v-if="title" class="font-md ml-3">{{ getTitle }}</text>
 				</view>
 				<!-- 右边 -->
 				<view class="flex align-center">
-					<free-icon-button :icon="'\ue6e3'" @click="handleBtnClick"></free-icon-button>
-					<free-icon-button :icon="'\ue682'" @click="handleBtnClick"></free-icon-button>
+					<free-icon-button :icon="'\ue6e3'" @click="search"></free-icon-button>
+					<free-icon-button :icon="'\ue682'" @click="openExtend"></free-icon-button>
 				</view>
 			</view>
 		</view>
@@ -30,23 +30,31 @@ export default {
 	},
 	props: {
 		title: {
-			type: Boolean,
+			type: [Boolean, String],
 			default: false
 		},
 		fixed: {
 			type: Boolean,
-			default: true,
+			default: true
 		},
+		noreadnum: {
+			type: Number,
+			default: 0
+		}
 	},
 	data() {
 		return {
 			statusBarHeight: 0,
-			navBarHeight: 0,
+			navBarHeight: 0
 		};
 	},
 	computed: {
 		fixedStyle() {
-			return `height: ${this.navBarHeight}px;`
+			return `height: ${this.navBarHeight}px;`;
+		},
+		getTitle() {
+			let noreadnum = this.noreadnum > 0 ? `(${this.noreadnum})` : '';
+			return this.title + noreadnum;
 		}
 	},
 	mounted() {
@@ -56,8 +64,9 @@ export default {
 		this.navBarHeight = this.statusBarHeight + uni.upx2px(90);
 	},
 	methods: {
-		handleBtnClick() {
-			console.log('btn click');
+		search() {},
+		openExtend() {
+			this.$emit('openExtend');
 		}
 	}
 };

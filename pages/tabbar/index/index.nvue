@@ -1,23 +1,23 @@
 <template>
 	<view>
 		<!-- 导航栏 -->
-		<free-nav-bar :title="true">
-			<template slot="title">仿微信(10)</template>
-		</free-nav-bar>
+		<free-nav-bar :title="true" @openExtend="openExtend" title="仿微信" :noreadnum="10"></free-nav-bar>
 		<!-- 列表 -->
-		<block v-for="(item,index) in list" :key="index">
-			<free-media-list :item="item" :index="index"></free-media-list>
-		</block>
+		<block v-for="(item, index) in list" :key="index"><free-media-list @long="long" :item="item" :index="index"></free-media-list></block>
+		<!-- 弹出层 -->
+		<free-popup ref="extend" :bodyWidth="300" :bodyHeight="400"><view style="width: 300rpx;height: 400rpx;"></view></free-popup>
 	</view>
 </template>
 
 <script>
 import freeNavBar from '@/components/free-ui/free-nav-bar.vue';
 import freeMediaList from '@/components/free-ui/free-media-list.vue';
+import freePopup from '../../../components/free-ui/free-popup.vue';
 export default {
 	components: {
 		freeNavBar,
 		freeMediaList,
+		freePopup,
 	},
 	data() {
 		return {
@@ -36,11 +36,88 @@ export default {
 					data: '你好~~~',
 					noreadnum: 2,
 				},
-			]
+				{
+					avatar: '/static/images/userpic.png',
+					nickname: 'summer',
+					update_time: 1605443937,
+					data: '你好~~~',
+					noreadnum: 2,
+				},
+				{
+					avatar: '/static/images/userpic.png',
+					nickname: 'summer',
+					update_time: 1605443937,
+					data: '你好~~~',
+					noreadnum: 2,
+				},
+				{
+					avatar: '/static/images/userpic.png',
+					nickname: 'summer',
+					update_time: 1605443937,
+					data: '你好~~~',
+					noreadnum: 2,
+				},
+				{
+					avatar: '/static/images/userpic.png',
+					nickname: 'summer',
+					update_time: 1605443937,
+					data: '你好~~~',
+					noreadnum: 2,
+				},
+				{
+					avatar: '/static/images/userpic.png',
+					nickname: 'summer',
+					update_time: 1605443937,
+					data: '你好~~~',
+					noreadnum: 2,
+				},
+				{
+					avatar: '/static/images/userpic.png',
+					nickname: 'summer',
+					update_time: 1605443937,
+					data: '你好~~~',
+					noreadnum: 2,
+				},
+				{
+					avatar: '/static/images/userpic.png',
+					nickname: 'summer',
+					update_time: 1605443937,
+					data: '你好~~~',
+					noreadnum: 2,
+				},
+				{
+					avatar: '/static/images/userpic.png',
+					nickname: 'summer',
+					update_time: 1605443937,
+					data: '你好~~~',
+					noreadnum: 2,
+				},
+				{
+					avatar: '/static/images/userpic.png',
+					nickname: 'summer',
+					update_time: 1605443937,
+					data: '你好~~~',
+					noreadnum: 2,
+				},
+				{
+					avatar: '/static/images/userpic.png',
+					nickname: 'summer',
+					update_time: 1605443937,
+					data: '你好~~~',
+					noreadnum: 2,
+				},
+			],
 		};
 	},
 	onLoad() {},
-	methods: {}
+	methods: {
+		openExtend() {
+			this.$refs.extend.show(100, 100);
+		},
+		long({ x, y }) {
+			this.$refs.extend.show(x, y);
+		},
+	},
 };
 </script>
 
