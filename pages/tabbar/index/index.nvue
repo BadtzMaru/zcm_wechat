@@ -1,0 +1,47 @@
+<template>
+	<view>
+		<!-- 导航栏 -->
+		<free-nav-bar :title="true">
+			<template slot="title">仿微信(10)</template>
+		</free-nav-bar>
+		<!-- 列表 -->
+		<block v-for="(item,index) in list" :key="index">
+			<free-media-list :item="item" :index="index"></free-media-list>
+		</block>
+	</view>
+</template>
+
+<script>
+import freeNavBar from '@/components/free-ui/free-nav-bar.vue';
+import freeMediaList from '@/components/free-ui/free-media-list.vue';
+export default {
+	components: {
+		freeNavBar,
+		freeMediaList,
+	},
+	data() {
+		return {
+			list: [
+				{
+					avatar: '/static/images/userpic.png',
+					nickname: 'summer',
+					update_time: 1606442937,
+					data: '你好~~~',
+					noreadnum: 1,
+				},
+				{
+					avatar: '/static/images/userpic.png',
+					nickname: 'summer',
+					update_time: 1605443937,
+					data: '你好~~~',
+					noreadnum: 2,
+				},
+			]
+		};
+	},
+	onLoad() {},
+	methods: {}
+};
+</script>
+
+<style></style>
