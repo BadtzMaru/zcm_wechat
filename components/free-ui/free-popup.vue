@@ -3,11 +3,14 @@
 		<!-- 蒙板 -->
 		<div v-if="mask" class="position-fixed top-0 right-0 bottom-0 left-0" :style="getMaskColor" @click="hide"></div>
 		<!-- 弹出框内容 -->
-		<div class="position-fixed bg-white" :class="getBodyClass" :style="getBodyStyle"><slot></slot></div>
+		<div class="position-fixed free-animated border" ref="popup" :class="getBodyClass" :style="getBodyStyle"><slot></slot></div>
 	</div>
 </template>
 
 <script>
+// #ifdef APP-PLUS-NVUE
+const animation = weex.requireModule('animation');
+// #endif
 export default {
 	props: {
 		// 蒙板颜色是否开启
@@ -35,6 +38,14 @@ export default {
 			type: Number,
 			default: 0,
 		},
+		bodyBgColor: {
+			type: String,
+			default: 'bg-white',
+		},
+		transformOrigin: {
+			type: String,
+			default: 'left top',
+		},
 	},
 	data() {
 		return {
@@ -52,7 +63,7 @@ export default {
 		},
 		getBodyClass() {
 			let bottom = this.bottom ? 'left-0 right-0 bottom-0' : 'rounded border';
-			return bottom;
+			return `${this.bodyBgColor} bottom`;
 		},
 		getBodyStyle() {
 			let left = this.x > -1 ? `left: ${this.x}px;` : '';
@@ -62,18 +73,51 @@ export default {
 	},
 	methods: {
 		show(x = -1, y = -1) {
-			this.x = x;
-			this.y = y;
+			this.x = x > this.maxX ? this.maxX : x;
+			this.y = y > this.maxY ? this.maxY : y;
 			this.status = true;
+			// #ifdef APP-PLUS-NVUE
+			this.$nextTick(() => {
+				animation.transition(this.$refs.popup, {
+					styles: {
+						transform: 'scale(1,1)',
+						transformOrigin: this.transformOrigin,
+						opacity: 1,
+					},
+					duration: 100,
+					timingFunction: 'ease',
+				});
+			});
+			// #endif
 		},
 		hide() {
+			// #ifdef APP-PLUS-NVUE
+			animation.transition(
+				this.$refs.popup,
+				{
+					styles: {
+						transform: 'scale(0,0)',
+						transformOrigin: this.transformOrigin,
+						opacity: 0,
+					},
+					duration: 100,
+					timingFunction: 'ease',
+				},
+				() => {
+					this.status = false;
+				}
+			);
+			// #endif
+			// #ifndef APP-PLUS-NVUE
 			this.status = false;
+			// #endif
 		},
 	},
 	mounted() {
 		try {
 			const res = uni.getSystemInfoSync();
-			console.log(res);
+			this.maxX = res.windowWidth - uni.upx2px(this.bodyWidth);
+			this.maxY = res.windowHeight - uni.upx2px(this.bodyHeight);
 		} catch (e) {
 			// error
 		}
@@ -81,4 +125,11 @@ export default {
 };
 </script>
 
-<style></style>
+<style scoped>
+.free-animated {
+	/* #ifdef APP-PLUS-NVUE */
+	transform: scale(0, 0);
+	opacity: 0;
+	/* #endif */
+}
+</style>

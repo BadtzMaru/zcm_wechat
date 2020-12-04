@@ -3,18 +3,18 @@
 		{
 			"path": "pages/tabbar/index/index",
 			"style": {}
-		}, {
-			"path": "pages/tabbar/mail/mail",
-			"style": {}
-
-		}, {
+		},
+		{
 			"path": "pages/tabbar/find/find",
 			"style": {}
-
-		}, {
+		},
+		{
+			"path": "pages/tabbar/mail/mail",
+			"style": {}
+		},
+		{
 			"path": "pages/tabbar/my/my",
 			"style": {}
-
 		}
 	],
 	"globalStyle": {
