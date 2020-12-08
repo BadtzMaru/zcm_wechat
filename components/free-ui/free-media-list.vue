@@ -3,8 +3,7 @@
 		<div class="flex align-center align-stretch" @click="onClick" @longpress="long">
 			<view class="flex align-center justify-center position-relative" style="width: 145rpx;">
 				<free-avatar :src="item.avatar" size="92"></free-avatar>
-				<free-badge v-if="item.noreadnum" badgeClass="position-absolute" badgeStyle="top:15rpx;right:15rpx;">
-					<text class="text-white font-sm">{{ item.noreadnum }}</text>
+				<free-badge v-if="item.noreadnum" badgeClass="position-absolute" badgeStyle="top:15rpx;right:15rpx;" :value="item.noreadnum">
 				</free-badge>
 			</view>
 			<view class="flex flex-1 flex-column border-bottom py-3 pr-3 border-light-secondary">

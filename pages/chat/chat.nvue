@@ -5,14 +5,22 @@
 		<!-- 聊天内容区域 -->
 		<scroll-view scroll-y class="bg-light position-fixed left-0 right-0 px-3" style="bottom: 105rpx;" :style="'top:' + navBarHeight + 'px;'">
 			<!-- 聊天信息列表组件 -->
-			<view class="flex align-start justify-start">
-				<free-avatar size="70" src="/static/images/avatar.jpeg"></free-avatar>
-				<div class="bg-white rounded p-2 ml-3" style="max-width:500rpx;"><text class="font-md">你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好</text></div>
-			</view>
-			<view class="flex align-start justify-end">
-				<div class="bg-chat-item rounded p-2 mr-3" style="max-width:500rpx;"><text class="font-md">你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好</text></div>
-				<free-avatar size="70" src="/static/images/avatar.jpeg"></free-avatar>
-			</view>
+			<block v-for="(item, index) in list" :key="index">
+				<view class="flex align-start position-relative mb-3" :class="item.user_id === 1 ? 'justify-end' : 'justify-start'">
+					<!-- 好友 -->
+					<template v-if="item.user_id !== 1">
+						<free-avatar size="70" :src="item.avatar"></free-avatar>
+					</template>
+					<text class="iconfont  font-md position-absolute " :class="item.user_id === 1 ? 'text-chat-item chat-right-icon' : 'text-white chat-left-icon'">{{item.user_id === 1 ? '&#xe640;' : '&#xe609;'}}</text>
+					<div class=" rounded p-2 " style="max-width:500rpx;" :class="item.user_id === 1 ? 'bg-chat-item mr-3' : 'bg-white ml-3'">
+						<text class="font-md">{{ item.data }}</text>
+					</div>
+					<!-- 本人 -->
+					<template v-if="item.user_id === 1">
+						<free-avatar size="70" :src="item.avatar"></free-avatar>
+					</template>
+				</view>
+			</block>
 		</scroll-view>
 		<!-- 底部输入框 -->
 		<view class="position-fixed left-0 right-0 bottom-0 border-top flex align-center" style="background-color: #F7F7F6;height: 105rpx;">
@@ -37,6 +45,10 @@ export default {
 	data() {
 		return {
 			navBarHeight: 0,
+			list: [
+				{ avatar: '/static/images/avatar.jpeg', user_id: 1, nickname: '昵称1', type: 'text', data: '123你好你好你好你好你好你好你好你好你好你好你好你好' },
+				{ avatar: '/static/images/avatar.jpeg', user_id: 2, nickname: '昵称2', type: 'text', data: '456你好你好你好你好你好你好你好你好你好你好你好你好' },
+			],
 		};
 	},
 	mounted() {
@@ -49,4 +61,13 @@ export default {
 };
 </script>
 
-<style></style>
+<style>
+.chat-left-icon {
+	left: 80rpx;
+	top: 20rpx;
+}
+.chat-right-icon {
+	right: 80rpx;
+	top: 20rpx;
+}
+</style>

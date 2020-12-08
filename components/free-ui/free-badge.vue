@@ -1,5 +1,5 @@
 <template>
-	<text class="bg-danger font-sm text-white rounded-circle free-badge" :class="badgeClass" :style="badgeStyle"><slot></slot></text>
+	<text class="bg-danger font-sm text-white rounded-circle free-badge" :class="badgeClass" :style="badgeStyle">{{ value }}</text>
 </template>
 
 <script>
@@ -12,7 +12,11 @@ export default {
 		badgeStyle: {
 			type: String,
 			default: '',
-		}
+		},
+		value: {
+			type: [String, Number],
+			default: '',
+		},
 	},
 };
 </script>
