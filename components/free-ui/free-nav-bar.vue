@@ -6,7 +6,9 @@
 			<!-- 导航 -->
 			<view style="height: 90rpx;" class="w-100 flex align-center justify-between">
 				<!-- 左边 -->
-				<view class="flex align-center font-md">
+				<view class="flex align-center">
+					<!-- 返回按钮 -->
+					<free-icon-button v-if="showBack" :icon="'\ue60d'" @click="back"></free-icon-button>
 					<!-- 标题 -->
 					<text v-if="title" class="font-md ml-3">{{ getTitle }}</text>
 				</view>
@@ -58,6 +60,10 @@ export default {
 			type: String,
 			default: 'bg-light',
 		},
+		showBack: {
+			type: Boolean,
+			default: false,
+		}
 	},
 	data() {
 		return {
@@ -106,6 +112,12 @@ export default {
 					console.log('delChat');
 					break;
 			}
+		},
+		// 返回
+		back() {
+			uni.navigateBack({
+				delta: 1,
+			});
 		},
 	},
 };

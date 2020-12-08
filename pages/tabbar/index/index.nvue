@@ -1,7 +1,7 @@
 <template>
 	<view>
 		<!-- 导航栏 -->
-		<free-nav-bar :title="true" title="微信" :noreadnum="10"></free-nav-bar>
+		<free-nav-bar title="微信" :noreadnum="10"></free-nav-bar>
 		<!-- 置顶列表 -->
 		<block v-for="(item, index) in list" :key="index"><free-media-list v-if="item.istop" @long="long" :item="item" :index="index"></free-media-list></block>
 		<!-- 非置顶列表 -->
@@ -20,7 +20,7 @@
 <script>
 import freeNavBar from '@/components/free-ui/free-nav-bar.vue';
 import freeMediaList from '@/components/free-ui/free-media-list.vue';
-import freePopup from '../../../components/free-ui/free-popup.vue';
+import freePopup from '@/components/free-ui/free-popup.vue';
 export default {
 	components: {
 		freeNavBar,

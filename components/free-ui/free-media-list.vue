@@ -34,7 +34,9 @@ export default {
 	},
 	methods: {
 		onClick() {
-			this.$emit('click');
+			uni.navigateTo({
+				url: '/pages/chat/chat',
+			});
 		},
 		long(e) {
 			let x = 0;

@@ -1,0 +1,52 @@
+<template>
+	<view>
+		<!-- 导航栏 -->
+		<free-nav-bar showBack title="BadtzMaru" :noreadnum="10"><free-icon-button slot="right" :icon="'\ue6fd'"></free-icon-button></free-nav-bar>
+		<!-- 聊天内容区域 -->
+		<scroll-view scroll-y class="bg-light position-fixed left-0 right-0 px-3" style="bottom: 105rpx;" :style="'top:' + navBarHeight + 'px;'">
+			<!-- 聊天信息列表组件 -->
+			<view class="flex align-start justify-start">
+				<free-avatar size="70" src="/static/images/avatar.jpeg"></free-avatar>
+				<div class="bg-white rounded p-2 ml-3" style="max-width:500rpx;"><text class="font-md">你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好</text></div>
+			</view>
+			<view class="flex align-start justify-end">
+				<div class="bg-chat-item rounded p-2 mr-3" style="max-width:500rpx;"><text class="font-md">你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好</text></div>
+				<free-avatar size="70" src="/static/images/avatar.jpeg"></free-avatar>
+			</view>
+		</scroll-view>
+		<!-- 底部输入框 -->
+		<view class="position-fixed left-0 right-0 bottom-0 border-top flex align-center" style="background-color: #F7F7F6;height: 105rpx;">
+			<free-icon-button :icon="'\ue606'"></free-icon-button>
+			<view class="flex-1"><textarea fixed class="border bg-white rounded p-1 font-md" style="height: 75rpx;" /></view>
+			<free-icon-button :icon="'\ue605'"></free-icon-button>
+			<free-icon-button :icon="'\ue603'"></free-icon-button>
+		</view>
+	</view>
+</template>
+
+<script>
+import freeNavBar from '@/components/free-ui/free-nav-bar.vue';
+import freeIconButton from '@/components/free-ui/free-icon-button.vue';
+import freeAvatar from '@/components/free-ui/free-avatar.vue';
+export default {
+	components: {
+		freeNavBar,
+		freeIconButton,
+		freeAvatar,
+	},
+	data() {
+		return {
+			navBarHeight: 0,
+		};
+	},
+	mounted() {
+		let statusBarHeight = 0;
+		// #ifdef APP-PLUS-NVUE
+		statusBarHeight = plus.navigator.getStatusbarHeight();
+		// #endif
+		this.navBarHeight = statusBarHeight + uni.upx2px(90);
+	},
+};
+</script>
+
+<style></style>
