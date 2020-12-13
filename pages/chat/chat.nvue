@@ -6,20 +6,7 @@
 		<scroll-view scroll-y class="bg-light position-fixed left-0 right-0 px-3" style="bottom: 105rpx;" :style="'top:' + navBarHeight + 'px;'">
 			<!-- 聊天信息列表组件 -->
 			<block v-for="(item, index) in list" :key="index">
-				<view class="flex align-start position-relative mb-3" :class="item.user_id === 1 ? 'justify-end' : 'justify-start'">
-					<!-- 好友 -->
-					<template v-if="item.u ser_id !== 1">
-						<free-avatar size="70" :src="item.avatar"></free-avatar>
-					</template>
-					<text class="iconfont  font-md position-absolute " :class="item.user_id === 1 ? 'text-chat-item chat-right-icon' : 'text-white chat-left-icon'">{{item.user_id === 1 ? '&#xe640;' : '&#xe609;'}}</text>
-					<div class=" rounded p-2 " style="max-width:500rpx;" :class="item.user_id === 1 ? 'bg-chat-item mr-3' : 'bg-white ml-3'">
-						<text class="font-md">{{ item.data }}</text>
-					</div>
-					<!-- 本人 -->
-					<template v-if="item.user_id === 1">
-						<free-avatar size="70" :src="item.avatar"></free-avatar>
-					</template>
-				</view>
+				<free-chat-item :item="item" :index="index" :preTime="index > 0 ? list[index - 1].create_time : 0"></free-chat-item>
 			</block>
 		</scroll-view>
 		<!-- 底部输入框 -->
@@ -35,20 +22,42 @@
 <script>
 import freeNavBar from '@/components/free-ui/free-nav-bar.vue';
 import freeIconButton from '@/components/free-ui/free-icon-button.vue';
-import freeAvatar from '@/components/free-ui/free-avatar.vue';
+import freeChatItem from '@/components/free-ui/free-chat-item.vue';
 export default {
 	components: {
 		freeNavBar,
 		freeIconButton,
-		freeAvatar,
+		freeChatItem
 	},
 	data() {
 		return {
 			navBarHeight: 0,
 			list: [
-				{ avatar: '/static/images/avatar.jpeg', user_id: 1, nickname: '昵称1', type: 'text', data: '123你好你好你好你好你好你好你好你好你好你好你好你好' },
-				{ avatar: '/static/images/avatar.jpeg', user_id: 2, nickname: '昵称2', type: 'text', data: '456你好你好你好你好你好你好你好你好你好你好你好你好' },
-			],
+				{
+					avatar: '/static/images/avatar.jpeg',
+					user_id: 1,
+					nickname: '昵称1',
+					type: 'text',
+					data: '123你好你好你好你好你好你好你好你好你好你好你好你好',
+					create_time: 1607227184
+				},
+				{
+					avatar: '/static/images/avatar.jpeg',
+					user_id: 2,
+					nickname: '昵称2',
+					type: 'text',
+					data: '456你好你好你好你好你好你好你好你好你好你好你好你好',
+					create_time: 1607227188
+				},
+				{
+					avatar: '/static/images/avatar.jpeg',
+					user_id: 2,
+					nickname: '昵称2',
+					type: 'text',
+					data: '456你好你好你好你好你好你好你好你好你好你好你好你好',
+					create_time: 1607528184
+				}
+			]
 		};
 	},
 	mounted() {
@@ -57,17 +66,8 @@ export default {
 		statusBarHeight = plus.navigator.getStatusbarHeight();
 		// #endif
 		this.navBarHeight = statusBarHeight + uni.upx2px(90);
-	},
+	}
 };
 </script>
 
-<style>
-.chat-left-icon {
-	left: 80rpx;
-	top: 20rpx;
-}
-.chat-right-icon {
-	right: 80rpx;
-	top: 20rpx;
-}
-</style>
+<style></style>
