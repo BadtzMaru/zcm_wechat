@@ -8,7 +8,7 @@
 			<block v-for="(item, index) in list" :key="index">
 				<view class="flex align-start position-relative mb-3" :class="item.user_id === 1 ? 'justify-end' : 'justify-start'">
 					<!-- 好友 -->
-					<template v-if="item.user_id !== 1">
+					<template v-if="item.u ser_id !== 1">
 						<free-avatar size="70" :src="item.avatar"></free-avatar>
 					</template>
 					<text class="iconfont  font-md position-absolute " :class="item.user_id === 1 ? 'text-chat-item chat-right-icon' : 'text-white chat-left-icon'">{{item.user_id === 1 ? '&#xe640;' : '&#xe609;'}}</text>
