@@ -68,7 +68,7 @@ export default {
 		},
 		getBodyClass() {
 			let bottom = this.bottom ? 'left-0 right-0 bottom-0' : 'rounded border';
-			return `${this.bodyBgColor} bottom`;
+			return `${this.bodyBgColor} ${bottom}`;
 		},
 		getBodyStyle() {
 			let left = this.x > -1 ? `left: ${this.x}px;` : '';
@@ -96,6 +96,7 @@ export default {
 			// #endif
 		},
 		hide() {
+			this.$emit('hide');
 			// #ifdef APP-PLUS-NVUE
 			animation.transition(
 				this.$refs.popup,

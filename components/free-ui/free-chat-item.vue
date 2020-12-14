@@ -11,16 +11,15 @@
 			<!-- 好友 -->
 			<template v-if="!isself">
 				<free-avatar size="70" :src="item.avatar"></free-avatar>
+				<text class="iconfont text-white font-md position-absolute chat-left-icon" :style="'top:20rpx;'">&#xe609;</text>
 			</template>
-			<text class="iconfont font-md position-absolute" :class="isself ? 'text-chat-item chat-right-icon' : 'text-white chat-left-icon'">
-				{{ isself ? '&#xe640;' : '&#xe609;' }}
-			</text>
 			<div class="rounded p-2 " style="max-width:500rpx;" :class="isself ? 'bg-chat-item mr-3' : 'bg-white ml-3'">
 				<text class="font-md">{{ item.data }}</text>
 			</div>
 			<!-- 本人 -->
 			<template v-if="isself">
 				<free-avatar size="70" :src="item.avatar"></free-avatar>
+				<text class="iconfont text-chat-item font-md position-absolute chat-right-icon" :style="'top:20rpx;'">&#xe640;</text>
 			</template>
 		</view>
 	</div>
