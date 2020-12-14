@@ -6,7 +6,7 @@
 		<scroll-view scroll-y class="bg-light position-fixed left-0 right-0 px-3" style="bottom: 105rpx;" :style="'top:' + navBarHeight + 'px;'">
 			<!-- 聊天信息列表组件 -->
 			<block v-for="(item, index) in list" :key="index">
-				<free-chat-item :item="item" :index="index" :preTime="index > 0 ? list[index - 1].create_time : 0"></free-chat-item>
+				<free-chat-item :item="item" :index="index" :preTime="index > 0 ? list[index - 1].create_time : 0" @long="long"></free-chat-item>
 			</block>
 		</scroll-view>
 		<!-- 底部输入框 -->
@@ -16,6 +16,14 @@
 			<free-icon-button :icon="'\ue605'"></free-icon-button>
 			<free-icon-button :icon="'\ue603'"></free-icon-button>
 		</view>
+		<!-- 弹出层 -->
+		<free-popup ref="extend" :bodyWidth="240" :bodyHeight="getMenusHeight" :tabbarHeight="105">
+			<view style="width: 240rpx;" :style="getMenusStyle" class="flex flex-column">
+				<view v-for="(item, index) in menusList" :key="index" class="flex-1 flex align-center" hover-class="bg-light" @click="clickEvent(item.event)">
+					<text class="font-md pl-3">{{ item.name }}</text>
+				</view>
+			</view>
+		</free-popup>
 	</view>
 </template>
 
@@ -23,11 +31,15 @@
 import freeNavBar from '@/components/free-ui/free-nav-bar.vue';
 import freeIconButton from '@/components/free-ui/free-icon-button.vue';
 import freeChatItem from '@/components/free-ui/free-chat-item.vue';
+
+import freePopup from '@/components/free-ui/free-popup.vue';
 export default {
 	components: {
 		freeNavBar,
 		freeIconButton,
-		freeChatItem
+
+		freeChatItem,
+		freePopup,
 	},
 	data() {
 		return {
@@ -39,7 +51,9 @@ export default {
 					nickname: '昵称1',
 					type: 'text',
 					data: '123你好你好你好你好你好你好你好你好你好你好你好你好',
-					create_time: 1607227184
+
+					create_time: 1607227184,
+					isremove: false,
 				},
 				{
 					avatar: '/static/images/avatar.jpeg',
@@ -47,7 +61,8 @@ export default {
 					nickname: '昵称2',
 					type: 'text',
 					data: '456你好你好你好你好你好你好你好你好你好你好你好你好',
-					create_time: 1607227188
+					create_time: 1607227188,
+					isremove: false,
 				},
 				{
 					avatar: '/static/images/avatar.jpeg',
@@ -55,10 +70,49 @@ export default {
 					nickname: '昵称2',
 					type: 'text',
 					data: '456你好你好你好你好你好你好你好你好你好你好你好你好',
-					create_time: 1607528184
-				}
-			]
+					create_time: 1607528184,
+					isremove: false,
+				},
+			],
+			menus: [
+				{ name: '复制', event: '' },
+				{ name: '发送给朋友', event: '' },
+				{ name: '收藏', event: '' },
+				{ name: '删除', event: '' },
+				{ name: '多选', event: '' },
+				{ name: '撤回', event: 'removeChatItem' },
+			],
+			// 当前操作的气泡索引
+			propIndex: -1,
 		};
+	},
+	computed: {
+		// 动态获取菜单高度
+		getMenusHeight() {
+			let H = 100;
+			return this.menus.length * H;
+		},
+		// 获取菜单的样式
+		getMenusStyle() {
+			return `height: ${this.getMenusHeight}rpx;`;
+		},
+		// 判断是否操作本人信息
+		isdoSelf() {
+			// 获取本人ID (假设拿到了1)
+			let id = 1;
+			let user_id = this.propIndex > -1 ? this.list[this.propIndex].user_id : 0;
+			return user_id === id;
+		},
+		// 获取操作菜单
+		menusList() {
+			return this.menus.filter(v => {
+				if (v.name === '撤回' && !this.isdoSelf) {
+					return false;
+				} else {
+					return true;
+				}
+			});
+		},
 	},
 	mounted() {
 		let statusBarHeight = 0;
@@ -66,7 +120,30 @@ export default {
 		statusBarHeight = plus.navigator.getStatusbarHeight();
 		// #endif
 		this.navBarHeight = statusBarHeight + uni.upx2px(90);
-	}
+	},
+	methods: {
+		// 长按消息气泡
+		long({ x, y, index }) {
+			// 初始化索引
+			this.propIndex = index;
+			this.$refs.extend.show(x, y);
+		},
+		// 操作菜单方法分发
+		clickEvent(event) {
+			switch (event) {
+				case 'removeChatItem':
+					// 拿到被操作的信息
+					if (this.propIndex > -1) {
+						this.list[this.propIndex].isremove = true;
+					}
+					break;
+				default:
+					break;
+			}
+			// 关闭菜单
+			this.$refs.extend.hide();
+		},
+	},
 };
 </script>
 

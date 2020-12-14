@@ -9,7 +9,7 @@
 				<view class="py-2 px-3 border-bottom bg-light">
 					<text class="font-md text-dark">{{ item.letter }}</text>
 				</view>
-				<free-list-item v-for="(item2, index2) in item.data" cover="/static/images/mail/friend.png" :title="item2"></free-list-item>
+				<free-list-item v-for="(item2, index2) in item.data" :key="index2" cover="/static/images/mail/friend.png" :title="item2"></free-list-item>
 			</view>
 		</block>
 	</view>
