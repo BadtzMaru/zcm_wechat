@@ -26,7 +26,22 @@
 		</view>
 		<!-- 扩展菜单 -->
 		<free-popup bottom ref="action" transformOrigin="center bottom" @hide="KeyboardHeight = 0">
-			<view style="height: 580rpx;" class="border-top border-light-secondary"><text>123</text></view>
+			<view style="height: 580rpx;" class="border-top border-light-secondary bg-light">
+				<swiper :indicator-dots="true" style="height: 510rpx;">
+					<swiper-item class="row" v-for="(item, index) in actionList" :key="index">
+						<view
+							v-for="(item2, index2) in item"
+							:key="index2"
+							class="col-3 flex align-center justify-center flex-column"
+							style="height: 255rpx;"
+							@click="actionEvent(item2.event)"
+						>
+							<image :src="item2.icon" mode="widthFix" style="width: 100rpx;height: 100rpx;"></image>
+							<text class="font-sm text-muted mt-2">{{ item2.name }}</text>
+						</view>
+					</swiper-item>
+				</swiper>
+			</view>
 		</free-popup>
 		<!-- 弹出层 -->
 		<free-popup ref="extend" :bodyWidth="240" :bodyHeight="getMenusHeight" :tabbarHeight="105">
@@ -55,6 +70,17 @@ export default {
 	},
 	data() {
 		return {
+			// 扩展菜单列表
+			actionList: [
+				[
+					{ name: '相册', icon: '/static/images/extends/pic.png', event: 'uploadImage' },
+					{ name: '拍摄', icon: '/static/images/extends/video.png', event: '' },
+					{ name: '收藏', icon: '/static/images/extends/shoucan.png', event: '' },
+					{ name: '名片', icon: '/static/images/extends/man.png', event: '' },
+					{ name: '语音通话', icon: '/static/images/extends/phone.png', event: '' },
+					{ name: '位置', icon: '/static/images/extends/path.png', event: '' },
+				],
+			],
 			navBarHeight: 0,
 			list: [
 				{
@@ -96,6 +122,7 @@ export default {
 			],
 			// 当前操作的气泡索引
 			propIndex: -1,
+			// 键盘高度
 			KeyboardHeight: 0,
 			// 输入文字
 			text: '',
@@ -212,6 +239,14 @@ export default {
 			// 关闭菜单
 			this.$refs.extend.hide();
 		},
+		// 扩展菜单
+		actionEvent(e) {
+			switch(e) {
+				case 'uploadImage':
+					console.log('上传图片');
+				break;
+			}
+		}
 	},
 };
 </script>
