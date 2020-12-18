@@ -24,6 +24,7 @@
 				<view class="main-bg-color rounded mr-2 px-2 py-1" @click="send('text')"><text class="font text-white">发送</text></view>
 			</template>
 		</view>
+
 		<!-- 扩展菜单 -->
 		<free-popup bottom ref="action" transformOrigin="center bottom" @hide="KeyboardHeight = 0">
 			<view style="height: 580rpx;" class="border-top border-light-secondary bg-light">
@@ -89,7 +90,6 @@ export default {
 					nickname: '昵称1',
 					type: 'text',
 					data: '123你好你好你好你好你好你好你好你好你好你好你好你好',
-
 					create_time: 1607227184,
 					isremove: false,
 				},
@@ -155,6 +155,7 @@ export default {
 				}
 			});
 		},
+
 		// 聊天区域bottom
 		chatBodyBottom() {
 			return `bottom: ${uni.upx2px(105) + this.KeyboardHeight}px;top: ${this.navBarHeight}px;`;
@@ -247,6 +248,29 @@ export default {
 				break;
 			}
 		}
+	},
+	methods: {
+		// 长按消息气泡
+		long({ x, y, index }) {
+			// 初始化索引
+			this.propIndex = index;
+			this.$refs.extend.show(x, y);
+		},
+		// 操作菜单方法分发
+		clickEvent(event) {
+			switch (event) {
+				case 'removeChatItem':
+					// 拿到被操作的信息
+					if (this.propIndex > -1) {
+						this.list[this.propIndex].isremove = true;
+					}
+					break;
+				default:
+					break;
+			}
+			// 关闭菜单
+			this.$refs.extend.hide();
+		},
 	},
 };
 </script>
